@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="mbMenu.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="modbrowser basic0000" x="0" y="0" width="1303" height="291"/>
+	<SubTexture name="modbrowser basic0001" x="0" y="291" width="1303" height="291"/>
+	<SubTexture name="modbrowser basic0002" x="0" y="582" width="1303" height="291"/>
+	<SubTexture name="modbrowser white0000" x="0" y="873" width="1364" height="305"/>
+	<SubTexture name="modbrowser white0001" x="0" y="1178" width="1364" height="305"/>
+	<SubTexture name="modbrowser white0002" x="0" y="1483" width="1364" height="305"/>
+</TextureAtlas>

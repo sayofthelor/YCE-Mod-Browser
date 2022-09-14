@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="cleanupMenu.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="cleanup basic0000" x="0" y="0" width="873" height="258"/>
+	<SubTexture name="cleanup basic0001" x="873" y="0" width="873" height="258"/>
+	<SubTexture name="cleanup basic0002" x="0" y="258" width="873" height="258"/>
+	<SubTexture name="cleanup white0000" x="873" y="258" width="899" height="266"/>
+	<SubTexture name="cleanup white0001" x="0" y="524" width="899" height="266"/>
+	<SubTexture name="cleanup white0002" x="899" y="524" width="899" height="266"/>
+</TextureAtlas>
