@@ -5,35 +5,46 @@ import("mod_support_stuff.InstallModScreen");
 import("sys.io.File");
 import ("sys.FileSystem");
 import("flixel.util.FlxTimer");
+import("logging.LogsOverlay");
 
 var bg:FlxSprite;
 var g:FlxSprite;
+var lowThing:FlxSprite;
+var highThing:FlxSprite;
 var loadingText:FlxText;
 var modName:FlxText;
-var titleText:Alphabet;
+var textThing:Array<String> = ["Y", "C", "E", " ", "M", "o", "d", " ", "B", "r", "o", "w", "s", "e", "r"];
 var modNameText:FlxText;
 var modAuthorText:FlxText;
 var modDescText:FlxText;
 var thingsSelectable:Bool = true;
-var modList = ["" => {}]; modList.remove("");
+var modList = ["" => {}]; modList.remove(""); // workaround to make a map because it doesn't work normally for some reason
 var getShit:Array<String> = null;
 var selected:Int = 0;
 var realIDs:Array<String> = [];
 var guideText:FlxText;
-var lowThing:FlxSprite;
+var verText:FlxText;
+var mbVersion:String = "1.1.0";
 
 function create():Void {
     add(bg = new FlxSprite().loadGraphic(Paths.image("browserBG")));
     bg.screenCenter();
     add(g = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF000000));
-    g.alpha = 0.5;
+    g.alpha = 0.4;
+    highThing = new FlxSprite().makeGraphic(FlxG.width, 114, 0xFF000000);
+    highThing.alpha = 0.6;
+    add(highThing);
     add(loadingText = new FlxText(32, 32, FlxG.width - 64, "Loading...", 32));
     loadingText.borderStyle = FlxTextBorderStyle.OUTLINE;
     loadingText.borderSize = 4;
     getMods();
     loadingText.destroy();
-    titleText = new Alphabet(32, 32, "YCE Mod Browser", true);
-    add(titleText);
+    var thing:Float = 32;
+    for (i in textThing) {
+        var a = new Alphabet(thing, 24, i, true);
+        add(a);
+        if (i == " ") thing += 32 else thing += 60;
+    }
     modNameText = new FlxText(32, 128, FlxG.width - 64, "", 64);
     modNameText.borderStyle = FlxTextBorderStyle.OUTLINE;
     modNameText.borderSize = 4;
@@ -46,13 +57,18 @@ function create():Void {
     add(modNameText);
     add(modAuthorText);
     add(modDescText);
-    guideText = new FlxText(32, FlxG.height - 36, FlxG.width - 64, "Press [UP] and [DOWN] to select a mod, [ACCEPT] to install it, and [BACK] to go back to the menu.", 12);
+    guideText = new FlxText(32, FlxG.height - 28, FlxG.width - 64, "Press [UP] and [DOWN] to select a mod, [ACCEPT] to install it, and [BACK] to go back to the menu.", 12);
     guideText.borderStyle = FlxTextBorderStyle.OUTLINE;
     guideText.borderSize = 2;
-    lowThing = new FlxSprite(0, FlxG.height - 48).makeGraphic(FlxG.width, 48, 0xFF000000);
+    verText = new FlxText(32, FlxG.height - 28, FlxG.width - 64, "YCEMB v" + mbVersion + " || by sayofthelor", 12);
+    verText.borderStyle = FlxTextBorderStyle.OUTLINE;
+    guideText.borderSize = 2;
+    guideText.alignment = "right";
+    lowThing = new FlxSprite(0, FlxG.height - 40).makeGraphic(FlxG.width, 40, 0xFF000000);
     lowThing.alpha = 0.6;
     add(lowThing);
     add(guideText);
+    add(verText);
     updateModTexts();
 }
 
@@ -87,7 +103,7 @@ function updateModTexts():Void {
 function getMods():Void {
     getShit = try (Http.requestUrl("https://raw.githubusercontent.com/sayofthelor/YCE-MB-Database/master/uploadedMods.txt").split('\n')) catch (e:Dynamic) null;
     if (getShit == null) {
-        trace("ERROR: Could not get mod list!");
+        LogsOverlay.error("[MOD BROWSER] ERROR: Could not get mod list!");
         FlxG.switchState(new MainMenuState());
     }
     for (i in getShit) {
@@ -97,16 +113,18 @@ function getMods():Void {
             modList.set(i, ID);
         }   
     }
-    trace(modList);
 }
 
 var otherThing:FlxSprite;
 function initModInstall():Void {
     otherThing = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
-    otherThing.alpha = 0.9;
+    otherThing.alpha = 0;
+    FlxTween.tween(otherThing, {alpha: 0.9}, 0.5);
     add(otherThing);
     titleText = new FlxText(32, 32, FlxG.width - 64, "Downloading mod...\nGame will look frozen, it isn't!\n(DON'T PRESS F5!)", 32);
     titleText.alignment = "center";
+    titleText.alpha = 0;
+    FlxTween.tween(titleText, {alpha: 1}, 0.5);
     titleText.screenCenter();
     titleText.borderStyle = FlxTextBorderStyle.OUTLINE;
     titleText.borderSize = 4;
@@ -118,7 +136,6 @@ function initModInstall():Void {
         FlxG.switchState(new InstallModScreen());
     }
     new FlxTimer().start(1, function() {
-        trace("DOWNLOADING");
         initShit.request(false);
     });
 }

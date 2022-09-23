@@ -1,33 +1,36 @@
 {
+	"discordRpc": null,
 	"skinnableGFs": [],
+	"downloadLink": null,
 	"locked": false,
 	"BFskins": [],
-	"name": "Mod Browser",
 	"keyNumbers": [
 		4
 	],
+	"name": "YCE Mod Browser",
 	"description": "(No description)",
 	"intro": {
-		"newgrounds": "newgrounds",
 		"authors": [
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
 			"evilsk8er"
 		],
-		"assoc": [
-			"In association",
-			"with"
-		],
+		"newgrounds": "newgrounds",
 		"gameName": [
 			"Friday Night Funkin'",
 			"YoshiCrafter",
 			"Engine"
 		],
-		"present": "present",
-		"bpm": 102
+		"assoc": [
+			"In association",
+			"with"
+		],
+		"bpm": 102,
+		"present": "present"
 	},
 	"skinnableBFs": [],
 	"titleBarName": "YCE Mod Browser",
+	"downloadLinkAlt": null,
 	"GFskins": []
 }
